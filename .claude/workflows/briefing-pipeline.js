@@ -2,7 +2,6 @@ export const meta = {
   name: 'briefing-pipeline',
   description: '브리핑 수집→작성→검증을 루프로 실행. B+(70점) 이상 나올 때까지 최대 3회 반복.',
   phases: [
-    { title: 'Pre-flight', detail: '구조 점검 9항목 확인' },
     { title: 'Collect', detail: 'briefing-researcher WebSearch 실행' },
     { title: 'Write', detail: 'briefing-writer 플레이스홀더 치환' },
     { title: 'Validate', detail: 'validator 루브릭 A 채점' },
@@ -11,14 +10,6 @@ export const meta = {
 
 const date = args && args.date ? args.date : '2026-06-12'
 const MAX_RETRIES = 3
-
-// ── 0단계: Pre-flight ──
-phase('Pre-flight')
-const preflightResult = await agent(
-  `agents/issue-fixer.md를 읽고 지시에 따라 프로젝트 구조를 점검하세요. 문제가 없으면 "PASS"만 반환하고, 문제가 있으면 수정 후 "FIXED: {수정 내용 한 줄}"을 반환하세요.`,
-  { label: 'pre-flight-check' }
-)
-log(`Pre-flight: ${preflightResult}`)
 
 // ── 루프: Collect → Write → Validate ──
 let attempt = 0
@@ -81,7 +72,6 @@ while (attempt < MAX_RETRIES && grade < 70) {
 }
 
 return {
-  preflight: preflightResult,
   attempts: attempt,
   reportPath,
   validationResult,

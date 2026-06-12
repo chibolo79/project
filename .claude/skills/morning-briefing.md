@@ -15,14 +15,15 @@ Workflow 엔진을 통해 **진짜 루프 구조**로 실행한다.
 
 ### 루프 구조
 ```
-Pre-flight (구조 점검)
-    └─▶ [루프 시작 — 최대 3회]
-            briefing-researcher  (WebSearch → 캐시 저장)
-                └─▶ briefing-writer  (플레이스홀더 치환 → HTML 저장)
-                        └─▶ validator  (루브릭 A 채점)
-                                ├─▶ B+(70점↑) → 루프 종료, 결과 출력
-                                └─▶ C 이하    → 재시도 (최대 3회)
+[루프 시작 — 최대 3회]
+    briefing-researcher  (WebSearch → 캐시 저장)
+        └─▶ briefing-writer  (플레이스홀더 치환 → HTML 저장)
+                └─▶ validator  (루브릭 A 채점)
+                        ├─▶ B+(70점↑) → 루프 종료, 결과 출력
+                        └─▶ C 이하    → 재시도 (최대 3회)
 ```
+
+구조 점검(Pre-flight)은 브리핑과 분리되어 있다. "점검해줘" 요청 시에만 issue-driven-fix 스킬이 실행한다.
 
 ### 실행 지시
 사용자가 브리핑을 요청하면 아래 Workflow를 실행한다:
