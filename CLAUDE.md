@@ -7,12 +7,15 @@
 ```
 .claude/skills/     — 슬래시 커맨드로 호출하는 스킬 정의
 agents/             — 전문화된 서브에이전트 정의
+config/             — 항목 설정 파일 (briefing-items.json 등)
+reports/            — 생성된 브리핑 리포트 저장
 SOUL.md             — 모든 에이전트가 따르는 공통 원칙
 ```
 
 ## 스킬 목록
 | 커맨드 | 역할 |
 |--------|------|
+| `/morning-briefing` | 선택 항목 수집 → 브리핑 리포트 생성 |
 | `/run-pipeline` | 전체 파이프라인 순서대로 실행 |
 | `/validate` | 루브릭 기반 산출물 검증 및 등급 판정 |
 
@@ -20,14 +23,16 @@ SOUL.md             — 모든 에이전트가 따르는 공통 원칙
 | 에이전트 | 역할 |
 |----------|------|
 | orchestrator | 단계 조율, 서브에이전트 위임 |
+| briefing-researcher | WebSearch로 시황 데이터 수집 |
+| briefing-writer | 수집 데이터 → 마크다운 리포트 작성 |
 | validator | 루브릭 평가 및 등급 판정 |
 
 ## 작업 흐름
 ```
-사용자 요청
-    └─▶ orchestrator  (조율)
-            ├─▶ [전문 에이전트들]  (실행)
-            └─▶ validator          (검증 → 등급 반환)
+/morning-briefing
+    └─▶ briefing-researcher  (WebSearch 수집)
+            └─▶ briefing-writer   (reports/YYYY-MM-DD.md 저장)
+                    └─▶ validator  (루브릭 검증 → 등급 반환)
 ```
 
 ## 하네스 원칙
