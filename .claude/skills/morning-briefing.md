@@ -42,9 +42,14 @@ briefing-researcher → briefing-writer 순서로 에이전트를 호출해 `rep
 
 ### 1단계 이후 — 브리핑 실행
 1. `config/briefing-items.json` 존재 여부 확인
-2. **briefing-researcher** 에이전트 호출 → 수집 JSON 반환
-3. **briefing-writer** 에이전트 호출 → 리포트 파일 저장
-4. **validator** 에이전트 호출 → 루브릭 점수 확인
+2. **briefing-researcher** 에이전트 호출
+   - 프롬프트: `agents/briefing-researcher.md를 읽고 지시에 따라 실행하세요. 오늘 날짜: YYYY-MM-DD`
+   - 반환값: `수집 완료: N개 항목 / reports/.research-cache.json` (한 줄)
+3. **briefing-writer** 에이전트 호출
+   - 프롬프트: `agents/briefing-writer.md를 읽고 지시에 따라 실행하세요. 오늘 날짜: YYYY-MM-DD`
+   - 반환값: 저장된 파일 경로 (한 줄)
+4. **validator** 에이전트 호출 — 메인 루프에서 직접 실행 (서브에이전트 불필요)
+   - `.claude/skills/validate.md`의 루브릭 A를 적용해 저장된 HTML 파일을 직접 채점
 5. B등급(70점) 이상이면 리포트 경로와 요약을 사용자에게 출력
 6. C등급 이하면 수집 실패 항목을 재수집 후 재작성 (최대 1회 재시도)
 

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아침 브리핑 — {{DATE}}</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;font-size:14px;background:#f0f2f5;color:#1a1a2e;padding:20px}
+  .report-header{background:#1a1a2e;color:#fff;border-radius:12px;padding:20px 24px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:flex-end}
+  .report-header h1{font-size:20px;font-weight:700;letter-spacing:-.3px;margin-bottom:3px}
+  .report-header .sub{font-size:11px;color:#8a8fa8}
+  .report-header .right{text-align:right;font-size:11px;color:#8a8fa8;line-height:1.8}
+  .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+  .kpi{background:#fff;border-radius:10px;padding:12px 14px;border:0.5px solid #e8eaee}
+  .kpi-label{font-size:10px;font-weight:700;color:#9098a9;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+  .kpi-val{font-size:20px;font-weight:700;color:#1a1a2e;letter-spacing:-.5px}
+  .kpi-chg{font-size:11px;margin-top:3px}
+  .section-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  .section-grid.wide{grid-template-columns:1fr}
+  .card{background:#fff;border-radius:10px;border:0.5px solid #e8eaee;overflow:hidden;display:flex;flex-direction:column}
+  .card-head{padding:10px 16px;border-bottom:0.5px solid #f0f2f5;display:flex;align-items:center;gap:7px}
+  .card-head-icon{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px}
+  .card-head-title{font-size:11px;font-weight:700;color:#5a6072;text-transform:uppercase;letter-spacing:.07em}
+  table.dt{width:100%;border-collapse:collapse}
+  table.dt tr{border-bottom:0.5px solid #f5f6f8}
+  table.dt tr:last-child{border-bottom:none}
+  table.dt td{padding:9px 16px;font-size:13px;vertical-align:top}
+  table.dt td.label-cell{color:#3d4152;width:42%}
+  table.dt td.val-cell{font-weight:700;font-size:14px;color:#1a1a2e;white-space:nowrap}
+  table.dt td.chg-cell{text-align:right;font-size:12px}
+  .item-label{font-weight:500;margin-bottom:1px}
+  .item-src a{font-size:10px;color:#b0b7c3;text-decoration:none}
+  .item-src a:hover{color:#378add;text-decoration:underline}
+  .fail-msg{font-size:11px;color:#ef6c00;margin-top:2px}
+  .fail-reason{font-size:10px;color:#9098a9;font-style:italic;margin-top:1px}
+  .card-summary{padding:10px 16px;background:#f8f9fb;border-top:0.5px solid #f0f2f5;margin-top:auto}
+  .card-summary-title{font-size:10px;font-weight:700;color:#9098a9;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+  .card-summary-body{font-size:12px;color:#4a5068;line-height:1.6}
+  .card-summary-body li{margin-left:14px;margin-bottom:2px}
+  .up{color:#d32f2f}.down{color:#1565c0}.flat{color:#9098a9}
+  .news-item{padding:10px 16px;border-bottom:0.5px solid #f5f6f8}
+  .news-item:last-child{border-bottom:none}
+  .news-hl{font-size:13px;font-weight:500;line-height:1.45}
+  .news-hl a{color:#1a1a2e;text-decoration:none}
+  .news-hl a:hover{color:#185fa5;text-decoration:underline}
+  .news-meta{display:flex;align-items:center;gap:6px;margin-top:3px}
+  .news-src{font-size:10px;color:#b0b7c3}
+  .news-src a{color:#378add;text-decoration:none}
+  .official-badge{font-size:9px;padding:1px 5px;border-radius:3px;background:#e8f5e9;color:#2e7d32;font-weight:700;letter-spacing:.03em}
+  .news-trend{font-size:11px;color:#4a5068;margin-top:5px;padding:6px 8px;background:#f8f9fb;border-radius:4px;line-height:1.5}
+  .footer{text-align:center;font-size:10px;color:#b0b7c3;margin-top:14px}
+  .chg-bar-wrap{display:flex;align-items:center;gap:4px;margin-top:3px}
+  .chg-bar{height:4px;border-radius:2px;min-width:2px;max-width:60px}
+  .chg-bar.up{background:#d32f2f}.chg-bar.down{background:#1565c0}.chg-bar.flat{background:#d0d3da}
+</style>
+</head>
+<body>
+
+<div class="report-header">
+  <div><h1>아침 브리핑</h1><div class="sub">Steel Export Morning Briefing</div></div>
+  <div class="right">{{DATE}}<br>수집: {{COLLECTED_AT}} &nbsp;·&nbsp; WebSearch {{SEARCH_COUNT}}회</div>
+</div>
+
+<!-- KPI 바 -->
+<div class="kpi-row">
+  <div class="kpi">
+    <div class="kpi-label">KRW / USD</div>
+    <div class="kpi-val">{{KRW_VAL}}</div>
+    <div class="kpi-chg {{KRW_CLS}}">{{KRW_CHG}}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">LME Nickel</div>
+    <div class="kpi-val">{{NI_VAL}}</div>
+    <div class="kpi-chg {{NI_CLS}}">{{NI_CHG}}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">BDI</div>
+    <div class="kpi-val">{{BDI_VAL}}</div>
+    <div class="kpi-chg {{BDI_CLS}}">{{BDI_CHG}}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">WTI</div>
+    <div class="kpi-val">{{WTI_VAL}}</div>
+    <div class="kpi-chg {{WTI_CLS}}">{{WTI_CHG}}</div>
+  </div>
+</div>
+
+<!-- 환율 + 원자재·철강시황 -->
+<div class="section-grid">
+
+  <div class="card">
+    <div class="card-head"><div class="card-head-icon" style="background:#e3f2fd">💱</div><span class="card-head-title">환율</span></div>
+    <table class="dt">
+      <!-- KRW/USD -->
+      <tr>
+        <td class="label-cell"><div class="item-label">KRW / USD</div><div class="item-src"><a href="{{KRW_URL}}" target="_blank">{{KRW_SRC}}</a></div></td>
+        <td class="val-cell">{{KRW_VAL}}<br><span style="font-size:10px;color:#9098a9;font-weight:400">KRW per 1 USD</span></td>
+        <td class="chg-cell"><span class="{{KRW_CLS}}">{{KRW_CHG}}</span><div class="chg-bar-wrap"><div class="chg-bar {{KRW_CLS}}" style="width:{{KRW_BAR}}px"></div></div></td>
+      </tr>
+      <!-- EUR/USD -->
+      <tr>
+        <td class="label-cell"><div class="item-label">EUR / USD</div><div class="item-src"><a href="{{EUR_URL}}" target="_blank">{{EUR_SRC}}</a></div></td>
+        <td class="val-cell">{{EUR_VAL}}<br><span style="font-size:10px;color:#9098a9;font-weight:400">USD per 1 EUR</span></td>
+        <td class="chg-cell"><span class="{{EUR_CLS}}">{{EUR_CHG}}</span><div class="chg-bar-wrap"><div class="chg-bar {{EUR_CLS}}" style="width:{{EUR_BAR}}px"></div></div></td>
+      </tr>
+      <!-- CNY/USD -->
+      <tr>
+        <td class="label-cell"><div class="item-label">CNY / USD</div><div class="item-src"><a href="{{CNY_URL}}" target="_blank">{{CNY_SRC}}</a></div></td>
+        <td class="val-cell">{{CNY_VAL}}<br><span style="font-size:10px;color:#9098a9;font-weight:400">CNY per 1 USD</span></td>
+        <td class="chg-cell"><span class="{{CNY_CLS}}">{{CNY_CHG}}</span><div class="chg-bar-wrap"><div class="chg-bar {{CNY_CLS}}" style="width:{{CNY_BAR}}px"></div></div></td>
+      </tr>
+    </table>
+    <div class="card-summary"><div class="card-summary-title">동향 요약</div><ul class="card-summary-body">
+      <li>{{KRW_TREND}}</li><li>{{EUR_TREND}}</li><li>{{CNY_TREND}}</li>
+    </ul></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-head-icon" style="background:#fce4ec">🏭</div><span class="card-head-title">원자재 / 철강시황</span></div>
+    <table class="dt">
+      <!-- LME Nickel -->
+      <tr>
+        <td class="label-cell"><div class="item-label">LME Nickel</div><div class="item-src"><a href="{{NI_URL}}" target="_blank">{{NI_SRC}}</a></div></td>
+        <td class="val-cell">{{NI_VAL}}<br><span style="font-size:10px;color:#9098a9;font-weight:400">USD/tonne</span></td>
+        <td class="chg-cell"><span class="{{NI_CLS}}">{{NI_CHG}}</span><div class="chg-bar-wrap"><div class="chg-bar {{NI_CLS}}" style="width:{{NI_BAR}}px"></div></div></td>
+      </tr>
+      <!-- China HRC -->
+      <tr>
+        <td class="label-cell"><div class="item-label">중국 HRC 수출 오퍼</div><div class="item-src"><a href="{{HRC_URL}}" target="_blank">{{HRC_SRC}}</a></div></td>
+        <td class="val-cell">{{HRC_VAL}}<br><span style="font-size:10px;color:#9098a9;font-weight:400">USD/tonne FOB</span></td>
+        <td class="chg-cell"><span class="{{HRC_CLS}}">{{HRC_CHG}}</span><div class="chg-bar-wrap"><div class="chg-bar {{HRC_CLS}}" style="width:{{HRC_BAR}}px"></div></div>{{HRC_FAIL}}</td>
+      </tr>
+    </table>
+    <div class="card-summary"><div class="card-summary-title">동향 요약</div><ul class="card-summary-body">
+      <li>{{NI_TREND}}</li><li>{{HRC_TREND}}</li>
+    </ul></div>
+  </div>
+
+</div>
+
+<!-- 해운 + 에너지 -->
+<div class="section-grid">
+
+  <div class="card">
+    <div class="card-head"><div class="card-head-icon" style="background:#e8f5e9">🚢</div><span class="card-head-title">해운</span></div>
+    <table class="dt">
+      <tr>
+        <td class="label-cell"><div class="item-label">BDI</div><div class="item-src"><a href="{{BDI_URL}}" target="_blank">{{BDI_SRC}}</a></div></td>
+        <td class="val-cell">{{BDI_VAL}}<br><span style="font-size:10px;color:#9098a9;font-weight:400">index points</span></td>
+        <td class="chg-cell"><span class="{{BDI_CLS}}">{{BDI_CHG}}</span><div class="chg-bar-wrap"><div class="chg-bar {{BDI_CLS}}" style="width:{{BDI_BAR}}px"></div></div></td>
+      </tr>
+      <tr>
+        <td class="label-cell"><div class="item-label">SCFI</div><div class="item-src"><a href="{{SCFI_URL}}" target="_blank">{{SCFI_SRC}}</a></div></td>
+        <td class="val-cell">{{SCFI_VAL}}<br><span style="font-size:10px;color:#9098a9;font-weight:400">index points</span></td>
+        <td class="chg-cell"><span class="{{SCFI_CLS}}">{{SCFI_CHG}}</span><div class="chg-bar-wrap"><div class="chg-bar {{SCFI_CLS}}" style="width:{{SCFI_BAR}}px"></div></div></td>
+      </tr>
+    </table>
+    <div class="card-summary"><div class="card-summary-title">동향 요약</div><ul class="card-summary-body">
+      <li>{{BDI_TREND}}</li><li>{{SCFI_TREND}}</li>
+    </ul></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-head-icon" style="background:#fff8e1">⛽</div><span class="card-head-title">에너지</span></div>
+    <table class="dt">
+      <tr>
+        <td class="label-cell"><div class="item-label">WTI / Brent</div><div class="item-src"><a href="{{OIL_URL}}" target="_blank">{{OIL_SRC}}</a></div></td>
+        <td class="val-cell">{{OIL_VAL}}<br><span style="font-size:10px;color:#9098a9;font-weight:400">USD/barrel</span></td>
+        <td class="chg-cell"><span class="{{WTI_CLS}}">{{OIL_CHG}}</span><div class="chg-bar-wrap"><div class="chg-bar {{WTI_CLS}}" style="width:{{OIL_BAR}}px"></div></div></td>
+      </tr>
+    </table>
+    <div class="card-summary"><div class="card-summary-title">동향 요약</div><ul class="card-summary-body">
+      <li>{{OIL_TREND}}</li>
+    </ul></div>
+  </div>
+
+</div>
+
+<!-- 무역규제 -->
+<div class="section-grid wide">
+  <div class="card">
+    <div class="card-head"><div class="card-head-icon" style="background:#f3e5f5">⚖️</div><span class="card-head-title">무역규제</span></div>
+    <!-- AD/Safeguard -->
+    <div class="news-item">
+      <div class="news-hl"><a href="{{AD_URL}}" target="_blank">{{AD_HL}}</a> {{AD_BADGE}}</div>
+      <div class="news-trend">{{AD_TREND}}</div>
+      <div class="news-meta"><span class="news-src"><a href="{{AD_URL}}" target="_blank">{{AD_SRC}}</a></span></div>
+    </div>
+    <!-- China export tax -->
+    <div class="news-item">
+      <div class="news-hl"><a href="{{TAX_URL}}" target="_blank">{{TAX_HL}}</a> {{TAX_BADGE}}</div>
+      <div class="news-trend">{{TAX_TREND}}</div>
+      <div class="news-meta"><span class="news-src"><a href="{{TAX_URL}}" target="_blank">{{TAX_SRC}}</a></span></div>
+    </div>
+    <div class="card-summary"><div class="card-summary-title">동향 요약</div><ul class="card-summary-body">
+      <li>{{AD_TREND}}</li><li>{{TAX_TREND}}</li>
+    </ul></div>
+  </div>
+</div>
+
+<div class="footer">자동 생성: morning-briefing 에이전트 &nbsp;·&nbsp; {{DATE}} &nbsp;·&nbsp; WebSearch {{SEARCH_COUNT}}회</div>
+</body>
+</html>

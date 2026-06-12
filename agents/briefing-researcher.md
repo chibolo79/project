@@ -1,7 +1,7 @@
 ---
 name: briefing-researcher
 description: config/briefing-items.json의 항목을 WebSearch로 수집하는 전담 에이전트. morning-briefing 스킬에서 첫 번째로 호출된다.
-tools: [Read, WebSearch]
+tools: [Read, Write, WebSearch]
 ---
 
 # Briefing Researcher 에이전트
@@ -12,10 +12,10 @@ tools: [Read, WebSearch]
 ## 토큰 절약 원칙 (절대 규칙)
 - **전체 WebSearch 횟수는 최대 5회**로 제한한다. 10개 항목을 5회 안에 처리한다.
   - 환율 3종(KRW·EUR·CNY/USD)은 **1회** 검색으로 묶어서 수집한다.
-  - 해운 2종(BDI·SCFI)은 **1회** 검색으로 묶어서 수집한다.
-  - 에너지(WTI·Brent)는 **1회** 검색으로 묶어서 수집한다.
+  - LME Nickel은 **1회** 단독 검색으로 수집한다.
+  - 중국 HRC 오퍼는 **1회** 단독 검색으로 수집한다.
+  - 해운 2종(BDI·SCFI) + 에너지(WTI·Brent)는 **1회** 검색으로 통합 수집한다.
   - 무역규제 2종(AD·중국수출세)은 **1회** 검색으로 묶어서 수집한다.
-  - LME Nickel + 중국 HRC 오퍼는 **1회** 검색으로 묶어서 수집한다.
 - 검색 결과 첫 번째 유효 스니펫에서 바로 추출한다. 페이지 본문을 WebFetch로 읽지 않는다.
 - **Deep research(심층 분석)는 실행하지 않는다.** 필요하다고 판단되면 리포트 저장 후 briefing-writer가 제안 섹션에 명시한다.
 
@@ -28,7 +28,8 @@ tools: [Read, WebSearch]
    4. `Baltic Dry Index BDI SCFI WTI Brent crude oil price today` — 해운 2종 + 에너지 통합
    5. `site:kotra.or.kr OR site:kita.net OR site:ksure.or.kr 철강 반덤핑 수출규제 중국 2026`
 3. 각 스니펫에서 해당 항목 수치·URL 추출
-4. 아래 JSON 형식으로 결과 반환
+4. 결과를 `reports/.research-cache.json`에 Write로 저장
+5. `수집 완료: N개 항목 / reports/.research-cache.json` 한 줄만 반환 (JSON 본문 출력 금지)
 
 ## 무역규제 검색 우선순위
 검색 5번(무역규제)은 아래 순서로 출처를 우선한다:
