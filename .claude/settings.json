@@ -13,7 +13,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo [hook] file modified: %CLAUDE_TOOL_INPUT%"
+            "command": "echo [hook] file modified: $env:CLAUDE_TOOL_INPUT"
           }
         ]
       }
