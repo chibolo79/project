@@ -8,50 +8,27 @@ description: 선택된 항목을 WebSearch로 수집해 오늘 날짜의 아침 
 ## 역할
 briefing-researcher → briefing-writer 순서로 에이전트를 호출해 `reports/YYYY-MM-DD.html`를 생성한다.
 
-## 실행 순서
+## 실행 방법
 
-### 0단계 — 사전 구조 점검 (Pre-flight Check)
-실행 전에 아래 항목을 순서대로 확인한다. 문제가 발견되면 **즉시 수정 후** 다음 단계로 진행한다.
+Workflow 엔진을 통해 **진짜 루프 구조**로 실행한다.
+스크립트 위치: `.claude/workflows/briefing-pipeline.js`
 
-| 점검 항목 | 확인 방법 | 자동 수정 가능 여부 |
-|-----------|-----------|---------------------|
-| 필수 파일 존재 | Glob으로 SOUL.md, CLAUDE.md, config/briefing-items.json, agents/4개, .claude/skills/3개 확인 | 없으면 사용자에게 알림 |
-| briefing-items.json 항목 수 | 파일 읽어 `items` 배열 길이 = 10 확인 | 가능하면 수정 |
-| 슬래시 커맨드 잔재 | skills/*.md, agents/*.md에서 `` `/커맨드` `` 패턴 검색 | 발견 시 대화체로 수정 |
-| researcher 검색 횟수 규칙 | briefing-researcher.md에 "최대 6회" 언급 확인 | 누락 시 추가 |
-| validator 루브릭 A/B 분기 | validator.md에 reports/*.html 분기 존재 확인 | 없으면 추가 |
+### 루프 구조
+```
+Pre-flight (구조 점검)
+    └─▶ [루프 시작 — 최대 3회]
+            briefing-researcher  (WebSearch → 캐시 저장)
+                └─▶ briefing-writer  (플레이스홀더 치환 → HTML 저장)
+                        └─▶ validator  (루브릭 A 채점)
+                                ├─▶ B+(70점↑) → 루프 종료, 결과 출력
+                                └─▶ C 이하    → 재시도 (최대 3회)
+```
 
-#### 이슈 관리 절차 (문제 발견 시 반드시 수행)
-
-1. **문제 발견** → `gh issue create`로 이슈 등록
-   - 제목: 발견된 문제를 비개발자도 이해할 수 있는 말로 작성
-   - 본문: 어떤 파일의 어떤 내용이 문제인지, 왜 문제인지 설명
-   - 라벨: `bug` (구조 오류) 또는 `enhancement` (개선 필요)
-
-2. **수정 완료** → `gh issue comment`로 댓글 추가
-   - 무엇을 어떻게 고쳤는지 간단히 기록
-
-3. **이슈 닫기** → `gh issue close`로 상태를 closed로 변경
-
-문제가 없으면 이슈를 만들지 않는다.
-
-점검 결과를 한 줄로 요약해 사용자에게 보고한다:
-- 이상 없음: `✓ 구조 점검 통과 — 브리핑을 시작합니다`
-- 수정 완료: `⚠ X건 수정 후 시작합니다: [수정 내용 요약]`
-- 수정 불가: `✗ 수동 확인 필요: [문제 내용]` → 사용자 승인 후 진행
-
-### 1단계 이후 — 브리핑 실행
-1. `config/briefing-items.json` 존재 여부 확인
-2. **briefing-researcher** 에이전트 호출
-   - 프롬프트: `agents/briefing-researcher.md를 읽고 지시에 따라 실행하세요. 오늘 날짜: YYYY-MM-DD`
-   - 반환값: `수집 완료: N개 항목 / reports/.research-cache.json` (한 줄)
-3. **briefing-writer** 에이전트 호출
-   - 프롬프트: `agents/briefing-writer.md를 읽고 지시에 따라 실행하세요. 오늘 날짜: YYYY-MM-DD`
-   - 반환값: 저장된 파일 경로 (한 줄)
-4. **validator** 에이전트 호출 — 메인 루프에서 직접 실행 (서브에이전트 불필요)
-   - `.claude/skills/validate.md`의 루브릭 A를 적용해 저장된 HTML 파일을 직접 채점
-5. B등급(70점) 이상이면 리포트 경로와 요약을 사용자에게 출력
-6. C등급 이하면 수집 실패 항목을 재수집 후 재작성 (최대 1회 재시도)
+### 실행 지시
+사용자가 브리핑을 요청하면 아래 Workflow를 실행한다:
+- 스크립트: `.claude/workflows/briefing-pipeline.js`
+- args: `{ "date": "YYYY-MM-DD" }` (오늘 날짜)
+- 최대 3회 반복, B+(70점) 이상 달성 시 즉시 종료
 
 ## 사용법
 대화창에 아래와 같이 입력합니다:
