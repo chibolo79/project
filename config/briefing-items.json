@@ -1,63 +1,72 @@
 {
-  "version": "1.2",
+  "version": "1.3",
   "updated": "2026-06-12",
-  "_note": "query 필드는 항목 참고용입니다. 실제 검색은 briefing-researcher.md의 5+1회 고정 쿼리를 사용합니다.",
+  "_note": "fetch_url이 있는 항목은 WebFetch 직접 수집. 없는 항목(무역규제)은 WebSearch 사용.",
   "items": [
     {
       "id": "fx_krw_usd",
       "category": "환율",
       "label": "KRW / USD",
       "unit": "KRW per 1 USD",
-      "note": "수출 견적 기준"
+      "note": "수출 견적 기준",
+      "fetch_url": "https://www.investing.com/currencies/usd-krw"
     },
     {
       "id": "fx_eur_usd",
       "category": "환율",
       "label": "EUR / USD",
       "unit": "USD per 1 EUR",
-      "note": "유럽향 오퍼 계산"
+      "note": "유럽향 오퍼 계산",
+      "fetch_url": "https://www.investing.com/currencies/eur-usd"
     },
     {
       "id": "fx_cny_usd",
       "category": "환율",
       "label": "CNY / USD",
       "unit": "CNY per 1 USD",
-      "note": "중국 경쟁사 가격 비교"
+      "note": "중국 경쟁사 가격 비교",
+      "fetch_url": "https://www.investing.com/currencies/usd-cny"
     },
     {
       "id": "lme_nickel",
       "category": "원자재",
       "label": "LME Nickel",
       "unit": "USD/tonne",
-      "note": "STS 원가 핵심"
+      "note": "STS 원가 핵심",
+      "fetch_url": "https://www.investing.com/commodities/nickel"
     },
     {
       "id": "china_hrc_offer",
       "category": "철강시황",
       "label": "중국 밀 수출 오퍼 동향",
       "unit": "USD/tonne FOB",
-      "note": "글로벌 가격 바닥 형성"
+      "note": "글로벌 가격 바닥 형성",
+      "fetch_url": "https://www.steelhome.cn/en/",
+      "fetch_url_alt": "https://www.mysteel.net/en/"
     },
     {
       "id": "bdi",
       "category": "해운",
       "label": "BDI (Baltic Dry Index)",
       "unit": "index points",
-      "note": "벌크 운임 추세"
+      "note": "벌크 운임 추세",
+      "fetch_url": "https://tradingeconomics.com/commodity/baltic"
     },
     {
       "id": "scfi",
       "category": "해운",
       "label": "SCFI (상하이 컨테이너 운임)",
       "unit": "index points",
-      "note": "컨테이너 품목 운임"
+      "note": "컨테이너 품목 운임",
+      "fetch_url": "https://en.sse.net.cn/indices/scfinew.jsp"
     },
     {
       "id": "crude_oil",
       "category": "에너지",
       "label": "유가 WTI / Brent",
       "unit": "USD/barrel",
-      "note": "물류비·산유국 수요 지표"
+      "note": "물류비·산유국 수요 지표",
+      "fetch_url": "https://www.investing.com/commodities/crude-oil"
     },
     {
       "id": "ad_safeguard",
