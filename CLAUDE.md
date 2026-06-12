@@ -5,11 +5,12 @@
 
 ## 디렉터리 구조
 ```
-.claude/skills/     — 에이전트 동작 지시 문서 (대화로 호출)
-agents/             — 전문화된 서브에이전트 정의
-config/             — 항목 설정 파일 (briefing-items.json 등)
-reports/            — 생성된 브리핑 리포트 저장
-SOUL.md             — 모든 에이전트가 따르는 공통 원칙
+.claude/skills/       — 에이전트 동작 지시 문서 (대화로 호출)
+.claude/templates/    — 재사용 HTML 템플릿 (플레이스홀더 방식)
+agents/               — 전문화된 서브에이전트 정의
+config/               — 항목 설정 파일 (briefing-items.json 등)
+reports/              — 생성된 브리핑 리포트 및 수집 캐시
+SOUL.md               — 모든 에이전트가 따르는 공통 원칙
 ```
 
 ## 스킬 목록
@@ -18,21 +19,26 @@ SOUL.md             — 모든 에이전트가 따르는 공통 원칙
 | `morning briefing 실행해줘` | 선택 항목 수집 → 브리핑 리포트 생성 |
 | `파이프라인 실행해줘` | 전체 파이프라인 순서대로 실행 |
 | `오늘 리포트 검증해줘` | 루브릭 기준 산출물 검증 및 등급 판정 |
+| `점검해줘` / `이슈 찾아서 고쳐줘` | 프로젝트 구조 점검 → GitHub 이슈 등록 → 수정 → close |
 
 ## 에이전트 목록
 | 에이전트 | 역할 |
 |----------|------|
 | orchestrator | 단계 조율, 서브에이전트 위임 |
-| briefing-researcher | WebSearch로 시황 데이터 수집 |
-| briefing-writer | 수집 데이터 → HTML 리포트 작성 |
+| briefing-researcher | WebSearch로 시황 데이터 수집 후 캐시 저장 |
+| briefing-writer | 캐시 → 플레이스홀더 치환 → HTML 리포트 저장 |
 | validator | 루브릭 평가 및 등급 판정 |
+| issue-fixer | 프로젝트 점검 → GitHub 이슈 등록·댓글·수정·close |
 
 ## 작업 흐름
 ```
-/morning-briefing
-    └─▶ briefing-researcher  (WebSearch 수집)
-            └─▶ briefing-writer   (reports/YYYY-MM-DD.html 저장)
-                    └─▶ validator  (루브릭 검증 → 등급 반환)
+morning-briefing / run-pipeline
+    └─▶ briefing-researcher  (WebSearch → reports/.research-cache.json)
+            └─▶ briefing-writer   (캐시 읽기 → 플레이스홀더 치환 → reports/YYYY-MM-DD.html)
+                    └─▶ validator  (루브릭 검증 → 등급 반환, 메인 루프 직접 실행)
+
+issue-driven-fix
+    └─▶ issue-fixer  (점검 → gh issue create → 댓글 → 수정 → gh issue close)
 ```
 
 ## 하네스 원칙
