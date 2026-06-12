@@ -130,6 +130,7 @@ while (attempt < MAX_RETRIES && grade < 70) {
   html = html
     .replace(/\{\{WTI_VAL\}\}/g, val(oil))
     .replace(/\{\{WTI_CLS\}\}/g, cls(oil.change_pct))
+    .replace(/\{\{WTI_CHG\}\}/g, chg(oil))
     .replace(/\{\{OIL_VAL\}\}/g, val(oil))
     .replace(/\{\{OIL_CHG\}\}/g, chg(oil))
     .replace(/\{\{OIL_BAR\}\}/g, bar(oil.change_pct))
