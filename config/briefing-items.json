@@ -1,13 +1,12 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "updated": "2026-06-12",
-  "_search_note": "각 항목의 query 필드는 참고용입니다. briefing-researcher는 토큰 절약을 위해 유사 항목을 묶은 5개 고정 쿼리를 사용합니다. agents/briefing-researcher.md 참조.",
+  "_note": "query 필드는 항목 참고용입니다. 실제 검색은 briefing-researcher.md의 5+1회 고정 쿼리를 사용합니다.",
   "items": [
     {
       "id": "fx_krw_usd",
       "category": "환율",
       "label": "KRW / USD",
-      "query": "원달러 환율 오늘 USD KRW exchange rate",
       "unit": "KRW per 1 USD",
       "note": "수출 견적 기준"
     },
@@ -15,7 +14,6 @@
       "id": "fx_eur_usd",
       "category": "환율",
       "label": "EUR / USD",
-      "query": "EUR USD exchange rate today euro dollar",
       "unit": "USD per 1 EUR",
       "note": "유럽향 오퍼 계산"
     },
@@ -23,7 +21,6 @@
       "id": "fx_cny_usd",
       "category": "환율",
       "label": "CNY / USD",
-      "query": "CNY USD exchange rate today yuan dollar",
       "unit": "CNY per 1 USD",
       "note": "중국 경쟁사 가격 비교"
     },
@@ -31,7 +28,6 @@
       "id": "lme_nickel",
       "category": "원자재",
       "label": "LME Nickel",
-      "query": "LME nickel price today USD per tonne",
       "unit": "USD/tonne",
       "note": "STS 원가 핵심"
     },
@@ -39,7 +35,6 @@
       "id": "china_hrc_offer",
       "category": "철강시황",
       "label": "중국 밀 수출 오퍼 동향",
-      "query": "China steel mill export offer price HRC today USD tonne",
       "unit": "USD/tonne FOB",
       "note": "글로벌 가격 바닥 형성"
     },
@@ -47,7 +42,6 @@
       "id": "bdi",
       "category": "해운",
       "label": "BDI (Baltic Dry Index)",
-      "query": "Baltic Dry Index BDI today",
       "unit": "index points",
       "note": "벌크 운임 추세"
     },
@@ -55,7 +49,6 @@
       "id": "scfi",
       "category": "해운",
       "label": "SCFI (상하이 컨테이너 운임)",
-      "query": "SCFI Shanghai Containerized Freight Index today",
       "unit": "index points",
       "note": "컨테이너 품목 운임"
     },
@@ -63,7 +56,6 @@
       "id": "crude_oil",
       "category": "에너지",
       "label": "유가 WTI / Brent",
-      "query": "WTI Brent crude oil price today USD barrel",
       "unit": "USD/barrel",
       "note": "물류비·산유국 수요 지표"
     },
@@ -71,7 +63,6 @@
       "id": "ad_safeguard",
       "category": "무역규제",
       "label": "반덤핑(AD) / 세이프가드 동향",
-      "query": "anti-dumping safeguard steel latest news 2026",
       "unit": "뉴스",
       "note": "수출 대상국 진입 장벽"
     },
@@ -79,7 +70,6 @@
       "id": "china_export_tax",
       "category": "무역규제",
       "label": "중국 수출세 / 환급세율",
-      "query": "China steel export tax rebate rate change 2026",
       "unit": "뉴스",
       "note": "중국발 공급 증감 예측"
     }

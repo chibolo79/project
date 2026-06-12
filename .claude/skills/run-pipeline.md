@@ -1,21 +1,28 @@
 ---
 name: run-pipeline
-description: 전체 파이프라인을 순서대로 실행한다. "파이프라인 실행", "전체 돌려줘", "run pipeline" 요청에 사용.
+description: morning-briefing 파이프라인을 처음부터 강제 실행한다. "파이프라인 실행", "전체 돌려줘", "run pipeline" 요청에 사용.
 ---
 
 # run-pipeline 스킬
 
 ## 역할
-orchestrator 에이전트를 통해 정의된 단계를 순서대로 실행하고, 마지막에 validator로 검증한다.
+`morning-briefing` 스킬과 동일한 파이프라인을 실행한다.
+기존 리포트 유무와 상관없이 항상 새로 수집·작성·검증한다.
 
 ## 실행 순서
-1. `agents/orchestrator.md` 지시에 따라 각 단계를 수행한다.
-2. 각 단계 완료 후 중간 결과를 간결히 보고한다.
-3. 전체 완료 후 `/validate`를 자동 호출해 루브릭 점수를 확인한다.
-4. 점수가 기준(70점 / B등급) 미달이면 원인을 분석하고 재실행 여부를 사용자에게 묻는다.
+1. `config/briefing-items.json` 존재 여부 확인
+2. **briefing-researcher** 에이전트 호출 → 수집 JSON 반환
+3. **briefing-writer** 에이전트 호출 → 리포트 파일 저장
+4. **validator** 에이전트 호출 → 루브릭 점수 확인
+5. B등급(70점) 이상이면 리포트 경로와 요약을 사용자에게 출력
+6. C등급 이하면 수집 실패 항목을 재수집 후 재작성 (최대 1회 재시도)
+
+> **morning-briefing과의 차이**: 기능은 동일하다.
+> "오늘 브리핑 실행해줘"나 "파이프라인 돌려줘" 어떻게 말해도 같은 결과를 얻는다.
 
 ## 사용법
+대화창에 아래와 같이 입력합니다:
 ```
-/run-pipeline
-/run-pipeline [선택적 단계 이름]
+파이프라인 실행해줘
+전체 돌려줘
 ```

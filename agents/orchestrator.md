@@ -20,7 +20,7 @@ tools: [Agent, Read, Write, Edit, Bash, Glob, Grep]
 | 에이전트 | 언제 위임 |
 |----------|-----------|
 | validator | 산출물 검증이 필요할 때 |
-| briefing-researcher | `/morning-briefing` 실행 시 데이터 수집 단계 |
+| briefing-researcher | 브리핑 실행 시 데이터 수집 단계 |
 | briefing-writer | 수집 완료 후 리포트 작성 단계 |
 
 ## 파이프라인: morning-briefing
