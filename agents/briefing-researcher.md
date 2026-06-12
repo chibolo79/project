@@ -78,6 +78,18 @@ tools: [Read, WebSearch]
 }
 ```
 
+## 수집 실패 재시도 규칙 (최대 1회 추가 검색)
+
+1차 5회 검색 완료 후 `value: "N/A"` 항목이 1개 이상이면:
+
+- **실패 항목 전체를 1개 쿼리로 묶어** WebSearch를 **1회만 추가** 실행한다.
+- 쿼리 예시 (실패 항목이 CNY/USD, China HRC인 경우):
+  `USD CNY exchange rate China HRC hot rolled coil export price today 2026`
+- 이 1회 재시도로 수집되면 해당 항목의 `value`와 `source_url`을 업데이트한다.
+- 재시도 후에도 수치를 찾지 못하면 **더 이상 검색하지 않는다**. `fail_reason`에 이유를 기재하고 종료.
+- **항목별 개별 재시도 금지** — 토큰 낭비 방지.
+- 총 WebSearch 횟수: 최대 **6회** (기본 5 + 재시도 1).
+
 ## 수집 규칙
 - 수치를 찾지 못하면 `value: "N/A"`, `fail_reason`에 실패 이유를 **구체적으로** 기재한다.
   - 예: `"주간 업데이트 방식으로 당일 수치 미제공 (매주 금요일 갱신)"`

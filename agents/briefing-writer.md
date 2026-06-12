@@ -192,7 +192,7 @@ kpiData.forEach(item => {
 </tr>
 ```
 
-수집 실패:
+수집 실패 (재시도 후에도 N/A인 항목):
 ```html
 <tr>
   <td class="label-cell">
@@ -200,7 +200,7 @@ kpiData.forEach(item => {
     <div class="item-src"><a href="{source_url}" target="_blank">{source_name}</a></div>
   </td>
   <td class="val-cell" colspan="2">
-    <span class="fail-msg">⚠ 수집 실패</span>
+    <span class="fail-msg">⚠ 수집 실패 (재시도 완료)</span>
     <div class="fail-reason">{fail_reason}</div>
   </td>
 </tr>
