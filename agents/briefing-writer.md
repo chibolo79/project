@@ -12,7 +12,7 @@ briefing-researcher가 반환한 JSON을 받아 HTML 리포트를 작성하고 `
 ## 토큰 절약 원칙 (절대 규칙)
 - 추가 조사나 WebSearch를 실행하지 않는다.
 - 수집된 데이터만 HTML 구조에 채워 넣는다. 자체 해석 생성 금지.
-- 카드 동향 요약은 researcher가 수집한 `trend` 필드와 `raw` 스니펫만 사용한다.
+- 카드 동향 요약은 researcher가 수집한 `trend` 필드만 사용한다.
 - 아래 HTML 템플릿 구조를 그대로 사용한다.
 
 ## HTML 템플릿

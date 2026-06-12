@@ -17,8 +17,10 @@ briefing-researcher → briefing-writer 순서로 에이전트를 호출해 `rep
 6. C등급 이하면 수집 실패 항목을 재수집 후 재작성 (최대 1회 재시도)
 
 ## 사용법
+대화창에 아래와 같이 입력합니다:
 ```
-/morning-briefing
+morning briefing 실행해줘
+오늘 시황 브리핑 해줘
 ```
 
 ## 출력
