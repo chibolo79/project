@@ -39,6 +39,8 @@ tools: [Read, WebSearch]
 5. 위 출처에서 찾지 못한 경우에만 일반 검색 결과 사용
 
 ## 출력 형식 (briefing-writer에게 전달)
+
+수치 항목 (category가 환율·원자재·철강시황·해운·에너지):
 ```json
 {
   "collected_at": "YYYY-MM-DD HH:MM KST",
@@ -56,6 +58,21 @@ tools: [Read, WebSearch]
       "fail_reason": ""
     }
   ]
+}
+```
+
+뉴스 항목 (category가 무역규제):
+```json
+{
+  "id": "ad_safeguard",
+  "category": "무역규제",
+  "label": "반덤핑(AD) / 세이프가드 동향",
+  "value": "",
+  "headline": "검색에서 찾은 헤드라인 1줄",
+  "trend": "스니펫에서 확인된 배경·맥락 1줄 (없으면 빈 문자열)",
+  "source_name": "KOTRA",
+  "source_url": "https://...",
+  "fail_reason": ""
 }
 ```
 

@@ -6,7 +6,7 @@ description: 선택된 항목을 WebSearch로 수집해 오늘 날짜의 아침 
 # morning-briefing 스킬
 
 ## 역할
-briefing-researcher → briefing-writer 순서로 에이전트를 호출해 `reports/YYYY-MM-DD.md`를 생성한다.
+briefing-researcher → briefing-writer 순서로 에이전트를 호출해 `reports/YYYY-MM-DD.html`를 생성한다.
 
 ## 실행 순서
 1. `config/briefing-items.json` 존재 여부 확인
@@ -22,7 +22,7 @@ briefing-researcher → briefing-writer 순서로 에이전트를 호출해 `rep
 ```
 
 ## 출력
-- 저장 경로: `reports/YYYY-MM-DD.md`
+- 저장 경로: `reports/YYYY-MM-DD.html`
 - 콘솔 출력: 각 항목 핵심 수치 요약 (5줄 이내)
 - 검증 점수 및 등급
 

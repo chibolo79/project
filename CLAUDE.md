@@ -24,14 +24,14 @@ SOUL.md             — 모든 에이전트가 따르는 공통 원칙
 |----------|------|
 | orchestrator | 단계 조율, 서브에이전트 위임 |
 | briefing-researcher | WebSearch로 시황 데이터 수집 |
-| briefing-writer | 수집 데이터 → 마크다운 리포트 작성 |
+| briefing-writer | 수집 데이터 → HTML 리포트 작성 |
 | validator | 루브릭 평가 및 등급 판정 |
 
 ## 작업 흐름
 ```
 /morning-briefing
     └─▶ briefing-researcher  (WebSearch 수집)
-            └─▶ briefing-writer   (reports/YYYY-MM-DD.md 저장)
+            └─▶ briefing-writer   (reports/YYYY-MM-DD.html 저장)
                     └─▶ validator  (루브릭 검증 → 등급 반환)
 ```
 

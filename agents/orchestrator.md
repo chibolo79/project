@@ -26,7 +26,7 @@ tools: [Agent, Read, Write, Edit, Bash, Glob, Grep]
 ## 파이프라인: morning-briefing
 ```
 briefing-researcher (수집)
-    └─▶ briefing-writer (리포트 작성 → reports/YYYY-MM-DD.md 저장)
+    └─▶ briefing-writer (리포트 작성 → reports/YYYY-MM-DD.html 저장)
             └─▶ validator (루브릭 검증 → 등급 반환)
 ```
 

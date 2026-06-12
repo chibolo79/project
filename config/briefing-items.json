@@ -1,6 +1,7 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "updated": "2026-06-12",
+  "_search_note": "각 항목의 query 필드는 참고용입니다. briefing-researcher는 토큰 절약을 위해 유사 항목을 묶은 5개 고정 쿼리를 사용합니다. agents/briefing-researcher.md 참조.",
   "items": [
     {
       "id": "fx_krw_usd",
