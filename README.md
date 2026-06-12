@@ -63,7 +63,7 @@ config/briefing-items.json
 
 ## 리포트 규칙
 
-- WebSearch **5회 이내**로 10개 항목 수집 (토큰 절약)
+- WebSearch **5회**: 환율 전용 1회 + LME 전용 1회 + HRC 전용 1회 + 해운·에너지 통합 1회 + 무역규제 1회
 - 출력: `reports/YYYY-MM-DD.html` (카드 그리드, 출처 링크 포함)
 - 상승 ▲ 빨강 / 하락 ▽ 파랑 색상 표시
 - 심층 분석(deep research)은 리포트 생성 후 별도 제안만

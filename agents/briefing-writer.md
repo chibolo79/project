@@ -70,7 +70,12 @@ briefing-researcher가 반환한 JSON을 받아 HTML 리포트를 작성하고 `
   .official-badge{font-size:9px;padding:1px 5px;border-radius:3px;background:#e8f5e9;color:#2e7d32;font-weight:700;letter-spacing:.03em}
   .news-trend{font-size:11px;color:#4a5068;margin-top:5px;padding:6px 8px;background:#f8f9fb;border-radius:4px;line-height:1.5}
   .footer{text-align:center;font-size:10px;color:#b0b7c3;margin-top:14px}
+  .kpi-chart{margin-top:6px;height:32px}
+  .chg-bar-wrap{display:flex;align-items:center;gap:4px;margin-top:3px}
+  .chg-bar{height:4px;border-radius:2px;min-width:2px;max-width:60px}
+  .chg-bar.up{background:#d32f2f}.chg-bar.down{background:#1565c0}.chg-bar.flat{background:#d0d3da}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -91,9 +96,35 @@ briefing-researcher가 반환한 JSON을 받아 HTML 리포트를 작성하고 `
     <div class="kpi-label">KRW / USD</div>
     <div class="kpi-val">{value}</div>
     <div class="kpi-chg {up|down|flat}">{▲|▽} {change}</div>
+    <!-- history 배열이 있으면 스파크라인, 없으면 변동폭 바 -->
+    <canvas class="kpi-chart" id="chart-{id}"></canvas>
   </div>
   <!-- 나머지 3개 동일 구조 -->
 </div>
+
+<!-- KPI 스파크라인 초기화 스크립트 (</body> 직전에 배치) -->
+<script>
+// kpiData = researcher JSON의 KPI 4개 항목 배열
+// 예: [{id:'fx_krw_usd', history:[1375,1377,1379,1380.5], change_pct:-0.17, value:'1,380.50'}, ...]
+const kpiData = [/* briefing-writer가 채움 */];
+kpiData.forEach(item => {
+  const canvas = document.getElementById('chart-' + item.id);
+  if (!canvas) return;
+  const pts = item.history && item.history.length >= 2
+    ? item.history
+    : [parseFloat(item.value.replace(/,/g,'')) * (1 - item.change_pct/100), parseFloat(item.value.replace(/,/g,''))];
+  const color = item.change_pct > 0 ? '#d32f2f' : item.change_pct < 0 ? '#1565c0' : '#9098a9';
+  new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels: pts.map((_,i) => i),
+      datasets: [{ data: pts, borderColor: color, borderWidth: 1.5, pointRadius: 0, tension: 0.3, fill: false }]
+    },
+    options: { animation: false, plugins: { legend: { display: false }, tooltip: { enabled: false } },
+      scales: { x: { display: false }, y: { display: false } } }
+  });
+});
+</script>
 
 <div class="section-grid">
   <!-- 카드들 (환율·원자재·해운·에너지) -->
@@ -153,7 +184,11 @@ briefing-researcher가 반환한 JSON을 받아 HTML 리포트를 작성하고 `
     <div class="item-src"><a href="{source_url}" target="_blank">{source_name}</a></div>
   </td>
   <td class="val-cell">{value}<br><span style="font-size:10px;color:#9098a9;font-weight:400">{unit}</span></td>
-  <td class="chg-cell"><span class="{up|down|flat}">{▲|▽} {change}</span></td>
+  <td class="chg-cell">
+    <span class="{up|down|flat}">{▲|▽} {change}</span>
+    <!-- 변동 바: |change_pct| * 3px (최대 60px) -->
+    <div class="chg-bar-wrap"><div class="chg-bar {up|down|flat}" style="width:{Math.min(Math.abs(change_pct)*3,60)}px"></div></div>
+  </td>
 </tr>
 ```
 

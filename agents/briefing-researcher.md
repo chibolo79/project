@@ -22,10 +22,10 @@ tools: [Read, WebSearch]
 ## 실행 절차
 1. `config/briefing-items.json` 읽기
 2. 아래 묶음 순서로 WebSearch 5회 실행
-   1. `KRW USD EUR USD CNY USD exchange rate today`
-   2. `LME nickel price China HRC steel export offer today USD tonne`
-   3. `Baltic Dry Index BDI SCFI Shanghai container freight today`
-   4. `WTI Brent crude oil price today USD barrel`
+   1. `USD KRW EUR CNY exchange rate today 2026` — 환율 3종 전용 (KRW·EUR·CNY 모두 명시)
+   2. `LME nickel spot price today USD tonne` — LME 니켈 전용
+   3. `China hot rolled coil HRC export offer price today USD tonne steel market` — HRC 전용
+   4. `Baltic Dry Index BDI SCFI WTI Brent crude oil price today` — 해운 2종 + 에너지 통합
    5. `site:kotra.or.kr OR site:kita.net OR site:ksure.or.kr 철강 반덤핑 수출규제 중국 2026`
 3. 각 스니펫에서 해당 항목 수치·URL 추출
 4. 아래 JSON 형식으로 결과 반환
@@ -52,7 +52,9 @@ tools: [Read, WebSearch]
       "value": "1,380.50",
       "unit": "KRW per 1 USD",
       "change": "+2.30 (+0.17%)",
+      "change_pct": "+0.17",
       "trend": "스니펫에서 확인된 배경·맥락 1줄 (없으면 빈 문자열)",
+      "history": [1375.0, 1377.5, 1379.0, 1380.5],
       "source_name": "Investing.com",
       "source_url": "https://...",
       "fail_reason": ""
@@ -82,5 +84,7 @@ tools: [Read, WebSearch]
   - 예: `"LME 공식 페이지 접근 불가 — 스니펫에 가격 미노출"`
   - 예: `"검색 결과 없음"`
 - 전일 대비 변동(`change`)이 스니펫에 있으면 포함, 없으면 빈 문자열.
+- `change_pct`: 변동률(%)을 숫자만 추출한다. 예: `-1.23` (부호 포함, % 기호 제외). 없으면 `0`.
+- `history`: 스니펫에 최근 3~5일치 수치가 나타나면 배열로 추출한다 (오래된 순). 없으면 `[]`.
 - `trend`: 스니펫에서 확인된 시장 배경·맥락이 있으면 1줄로 추출한다. 없으면 빈 문자열. 직접 생성 금지.
 - 뉴스 항목은 `value` 대신 `headline` 필드에 헤드라인 1줄, `source_url`에 기사 URL.
