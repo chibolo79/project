@@ -9,6 +9,24 @@ description: 선택된 항목을 WebSearch로 수집해 오늘 날짜의 아침 
 briefing-researcher → briefing-writer 순서로 에이전트를 호출해 `reports/YYYY-MM-DD.html`를 생성한다.
 
 ## 실행 순서
+
+### 0단계 — 사전 구조 점검 (Pre-flight Check)
+실행 전에 아래 항목을 순서대로 확인한다. 문제가 발견되면 **즉시 수정 후** 다음 단계로 진행한다.
+
+| 점검 항목 | 확인 방법 | 자동 수정 가능 여부 |
+|-----------|-----------|---------------------|
+| 필수 파일 존재 | Glob으로 SOUL.md, CLAUDE.md, config/briefing-items.json, agents/4개, .claude/skills/3개 확인 | 없으면 사용자에게 알림 |
+| briefing-items.json 항목 수 | 파일 읽어 `items` 배열 길이 = 10 확인 | 가능하면 수정 |
+| 슬래시 커맨드 잔재 | skills/*.md, agents/*.md에서 `` `/커맨드` `` 패턴 검색 | 발견 시 대화체로 수정 |
+| researcher 검색 횟수 규칙 | briefing-researcher.md에 "최대 6회" 언급 확인 | 누락 시 추가 |
+| validator 루브릭 A/B 분기 | validator.md에 reports/*.html 분기 존재 확인 | 없으면 추가 |
+
+점검 결과를 한 줄로 요약해 사용자에게 보고한다:
+- 이상 없음: `✓ 구조 점검 통과 — 브리핑을 시작합니다`
+- 수정 완료: `⚠ X건 수정 후 시작합니다: [수정 내용 요약]`
+- 수정 불가: `✗ 수동 확인 필요: [문제 내용]` → 사용자 승인 후 진행
+
+### 1단계 이후 — 브리핑 실행
 1. `config/briefing-items.json` 존재 여부 확인
 2. **briefing-researcher** 에이전트 호출 → 수집 JSON 반환
 3. **briefing-writer** 에이전트 호출 → 리포트 파일 저장
