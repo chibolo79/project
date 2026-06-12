@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아침 브리핑 — 2026-06-12</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 14px;
+         background: #f5f5f5; color: #1a1a1a; padding: 24px; }
+  h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+  .meta { font-size: 12px; color: #666; margin-bottom: 20px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .card { background: #fff; border-radius: 10px; padding: 16px; border: 1px solid #e5e5e5; }
+  .card-title { font-size: 11px; font-weight: 600; color: #888;
+                text-transform: uppercase; letter-spacing: .05em; margin-bottom: 12px; }
+  table { width: 100%; border-collapse: collapse; }
+  th { font-size: 11px; color: #999; font-weight: 500; text-align: left;
+       padding: 4px 0; border-bottom: 1px solid #f0f0f0; }
+  td { padding: 7px 0; border-bottom: 1px solid #f7f7f7; vertical-align: top; }
+  td.right { text-align: right; }
+  .val { font-weight: 600; font-size: 15px; }
+  .up   { color: #e53935; }
+  .down { color: #1e88e5; }
+  .flat { color: #888; }
+  .chg  { font-size: 12px; }
+  .src  { font-size: 11px; color: #aaa; margin-top: 1px; }
+  .src a { color: #1976d2; text-decoration: none; }
+  .src a:hover { text-decoration: underline; }
+  .news-item { padding: 8px 0; border-bottom: 1px solid #f7f7f7; }
+  .news-item:last-child { border-bottom: none; }
+  .news-hl { font-size: 13px; line-height: 1.45; }
+  .news-hl a { color: #1a1a1a; text-decoration: none; }
+  .news-hl a:hover { text-decoration: underline; }
+  .na { color: #ccc; font-style: italic; }
+  .footer { margin-top: 20px; font-size: 11px; color: #bbb; text-align: center; }
+  .badge { display: inline-block; font-size: 10px; padding: 1px 6px;
+           border-radius: 4px; font-weight: 600; vertical-align: middle; margin-left: 4px; }
+  .badge-down { background: #e3f2fd; color: #1565c0; }
+  .badge-up   { background: #ffebee; color: #c62828; }
+</style>
+</head>
+<body>
+
+<h1>아침 브리핑</h1>
+<p class="meta">2026-06-12 &nbsp;|&nbsp; 수집: 오전 (KST) &nbsp;|&nbsp; WebSearch 5회</p>
+
+<div class="grid">
+
+  <!-- 환율 -->
+  <div class="card">
+    <div class="card-title">환율</div>
+    <table>
+      <tr>
+        <th>항목</th><th>현재</th><th class="right">전일 대비</th>
+      </tr>
+      <tr>
+        <td>KRW / USD<br><span class="src"><a href="https://wise.com/us/currency-converter/usd-to-krw-rate" target="_blank">Wise</a></span></td>
+        <td><span class="val">1,527.92</span><br><span class="src">KRW per 1 USD</span></td>
+        <td class="right"><span class="chg up">▲ +0.30%</span></td>
+      </tr>
+      <tr>
+        <td>EUR / USD<br><span class="src"><a href="https://www.ecb.europa.eu/stats/shared/pdf/eurofxref.pdf" target="_blank">ECB</a></span></td>
+        <td><span class="val">1.1560</span><br><span class="src">USD per 1 EUR</span></td>
+        <td class="right"><span class="chg flat">— N/A</span></td>
+      </tr>
+      <tr>
+        <td>CNY / USD<br><span class="src"><a href="https://www.revolut.com/en-US/currency-converter/convert-krw-to-cny-exchange-rate/" target="_blank">Revolut</a></span></td>
+        <td><span class="val">~7.25</span><br><span class="src">CNY per 1 USD</span></td>
+        <td class="right"><span class="chg flat">— N/A</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 원자재 -->
+  <div class="card">
+    <div class="card-title">원자재</div>
+    <table>
+      <tr>
+        <th>항목</th><th>현재</th><th class="right">전일 대비</th>
+      </tr>
+      <tr>
+        <td>LME Nickel<br><span class="src"><a href="https://www.lme.com/metals/non-ferrous/lme-nickel" target="_blank">LME</a> · <a href="https://tradingeconomics.com/commodity/nickel" target="_blank">Trading Economics</a></span></td>
+        <td><span class="val">18,306</span><br><span class="src">USD / tonne</span></td>
+        <td class="right"><span class="chg down">▽ 최저 (4월 이후)</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 철강 시황 -->
+  <div class="card">
+    <div class="card-title">철강 시황</div>
+    <table>
+      <tr>
+        <th>항목</th><th>현재</th><th class="right">비고</th>
+      </tr>
+      <tr>
+        <td>중국 HRC 수출 오퍼<br><span class="src"><a href="https://www.lme.com/metals/ferrous/lme-steel-hrc-fob-china-argus" target="_blank">LME Steel HRC FOB China</a></span></td>
+        <td><span class="na">— (수집 실패)</span></td>
+        <td class="right"><span class="src">6/10~11 데이터 존재,<br>정확한 가격 미확인</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 해운 -->
+  <div class="card">
+    <div class="card-title">해운</div>
+    <table>
+      <tr>
+        <th>항목</th><th>현재</th><th class="right">전일 대비</th>
+      </tr>
+      <tr>
+        <td>BDI <span class="badge badge-down">10일 연속 하락</span><br><span class="src"><a href="https://tradingeconomics.com/commodity/baltic" target="_blank">Trading Economics</a> · <a href="https://www.handybulk.com/baltic-dry-index/" target="_blank">HandyBulk</a></span></td>
+        <td><span class="val">2,729</span><br><span class="src">index points</span></td>
+        <td class="right"><span class="chg down">▽ −1.52%</span></td>
+      </tr>
+      <tr>
+        <td>SCFI<br><span class="src"><a href="https://www.cello-square.com/en/blog/view-1453.do" target="_blank">Cello Square</a></span></td>
+        <td><span class="na">— (수집 실패)</span></td>
+        <td class="right"><span class="src">주간 업데이트, 미확인</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 에너지 -->
+  <div class="card">
+    <div class="card-title">에너지</div>
+    <table>
+      <tr>
+        <th>항목</th><th>현재</th><th class="right">전일 대비</th>
+      </tr>
+      <tr>
+        <td>WTI<br><span class="src"><a href="https://tradingeconomics.com/commodity/crude-oil" target="_blank">Trading Economics</a></span></td>
+        <td><span class="val">$85.94</span><br><span class="src">USD / barrel</span></td>
+        <td class="right"><span class="chg down">▽ −4%↑ (4월 이후 최저)</span></td>
+      </tr>
+      <tr>
+        <td>Brent<br><span class="src"><a href="https://www.investing.com/commodities/brent-oil" target="_blank">Investing.com</a></span></td>
+        <td><span class="val">$89.38</span><br><span class="src">USD / barrel</span></td>
+        <td class="right"><span class="chg down">▽ (범위 $88.82–$89.70)</span></td>
+      </tr>
+    </table>
+    <p style="font-size:11px;color:#888;margin-top:8px;">미·이란 협상 진전 소식으로 급락</p>
+  </div>
+
+  <!-- 무역 규제 -->
+  <div class="card">
+    <div class="card-title">무역 규제 동향</div>
+    <div class="news-item">
+      <div class="news-hl">
+        <a href="https://discoveryalert.com.au/anti-dumping-measures-chinese-steel-policy-2026/" target="_blank">
+          글로벌 반덤핑 조치: 62개국이 중국 철강에 207건 규제 시행 중
+        </a>
+      </div>
+      <div class="src">Discovery Alert · GMK Center</div>
+    </div>
+    <div class="news-item">
+      <div class="news-hl">
+        <a href="https://www.sekologistics.com/en/resource-hub/news/china-export-tax-rebate-changes-2026-complete-supply-chain-planning-guide-for-importers-and-exporters/" target="_blank">
+          중국, 2026년 1월 9일부로 249개 품목 수출 VAT 환급(9%) 폐지 — 4월 1일부터 전면 적용
+        </a>
+      </div>
+      <div class="src">SEKO Logistics</div>
+    </div>
+    <div class="news-item">
+      <div class="news-hl">
+        <a href="https://discoveryalert.com.au/trade-defense-mechanisms-construction-steel-2026/" target="_blank">
+          건설용 철강 반덤핑 규제 강화 — 미·EU·캐나다·호주가 주도
+        </a>
+      </div>
+      <div class="src">Discovery Alert</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">자동 생성: morning-briefing 에이전트 &nbsp;|&nbsp; 2026-06-12</div>
+</body>
+</html>
